@@ -1,0 +1,14 @@
+<!-- Overlay -->
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 z-40" (click)="onClose()"></div>
+
+<!-- Dialog -->
+<div class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="max-w-sm w-full bg-white rounded-lg shadow-md p-4">
+    <h2 class="text-xl font-bold">{{data.title}}</h2>
+    <h2 class="mt-2 font-bold">{{data.author}}</h2>
+    <p class="mt-2">{{data.body}}</p>
+    <div class="mt-4 flex justify-end">
+      <button (click)="onClose()" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Close</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<table class="min-w-full min-h-full">
+  <thead>
+  <tr>
+    <ng-template [ngIf]="fieldType == 'USERS'">
+    <th class="py-2 px-4 border-b text-center">Name</th>
+    <th class="py-2 px-4 border-b text-center">Username</th>
+    <th class="py-2 px-4 border-b text-center">Email</th>
+    <th class="py-2 px-4 border-b text-center">Actions</th>
+    </ng-template>
+    <ng-template [ngIf]="fieldType == 'POSTS'">
+    <th class="py-2 px-4 border-b text-center">ID</th>
+    <th class="py-2 px-4 border-b text-center">Title</th>
+    <th class="py-2 px-4 border-b text-center">Actions</th>
+    </ng-template>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let i of dataSource">
+    <ng-template [ngIf]="fieldType == 'USERS'">
+      <td class="py-2 px-4 border-b text-center">{{ i.name }}</td>
+      <td class="py-2 px-4 border-b text-center">{{ i.username }}</td>
+      <td class="py-2 px-4 border-b text-center">{{ i.email }}</td>
+    </ng-template>
+
+    <ng-template  [ngIf]="fieldType == 'POSTS'">
+      <td class="py-2 px-4 border-b text-center">{{ i.id }}</td>
+      <td class="py-2 px-4 border-b text-center">{{ i.title }}</td>
+    </ng-template>
+    <td class="py-2 px-4 border-b text-center">
+      <div class="flex justify-center">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2" (click)="onEdit(i)">{{label}}</button>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
