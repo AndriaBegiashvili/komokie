@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit{
     })
   }
 
-  soso($event: any) {
+  navigate($event: any) {
     this.router.navigate(["/posts",$event.id])
   }
 }

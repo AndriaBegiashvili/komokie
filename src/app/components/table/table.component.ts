@@ -1,25 +1,48 @@
-import {Component, EventEmitter, Input, Output, output} from '@angular/core';
-import {CommonModule, NgFor} from "@angular/common";
-import {Router, RouterEvent, RouterOutlet} from "@angular/router";
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.css'
+  styleUrls: ['./table.component.css']
 })
-export class TableComponent {
-
-  constructor(private router:Router) {
-  }
-  @Input() dataSource:any;
-  @Input() label:any = 'Posts';
+export class TableComponent implements OnChanges {
+  @Input() dataSource: any[] = [];
+  @Input() label: string = 'Posts';
   @Output() newItemEvent = new EventEmitter<any>();
-  @Input() fieldType: any;
+  @Input() fieldType: string = '';
+
+  searchQuery: string = '';
+  filteredDataSource: any[] = [];
+
+  constructor(private router: Router) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['dataSource']) {
+      this.filteredDataSource = [...changes['dataSource'].currentValue];
+    }
+  }
+  filterData(): void {
+    if (!this.searchQuery) {
+      this.filteredDataSource = [...this.dataSource];
+    } else {
+      const query = this.searchQuery.toLowerCase();
+      this.filteredDataSource = this.dataSource.filter(item => {
+        if (this.fieldType === 'USERS') {
+          return item.name.toLowerCase().includes(query)
+        } else if (this.fieldType === 'POSTS') {
+          return item.title.toLowerCase().includes(query);
+        }
+        return false;
+      });
+    }
+  }
 
   onEdit(item: { id: number, name: string }) {
-    this.newItemEvent.emit(item)
+    this.newItemEvent.emit(item);
   }
-
 }
